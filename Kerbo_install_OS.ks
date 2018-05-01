@@ -1,3 +1,8 @@
+//Beta 0.1.7
+CREATE Orbital_Data_prg_data.ks.
+CREATE settings.ks.
+CREATE commandTerminal.ks.
+CREATE Kerbo_OS_appstore.ks.
 CREATE Kerbo_OS_log.ks.
 CREATE Kerbo_OS_boot.ks.
 CREATE Kerbo_OS_account.ks.
@@ -28,12 +33,13 @@ IF ch = terminal:input:enter {
 }
 set oh to terminal:input:getchar().
 }
+clearscreen.
+LOG "set update_file to "ver_beta_zero_one_eight_updater".
 print "installing the login system...".
 print "Enter your wanted password".
 set password_accepted to false.
 set password_full to "".
 set stopped to 0.
-clearscreen.
 UNTIL password_accepted {
 	set password to terminal:input:getchar().
 	set password_full to password_full+password.
@@ -62,7 +68,8 @@ UNTIL password_accepted {
 		}
 	}
 }
-print "Kerbo OS is performing first time load up please wait a while...".
+print "Kerbo OS is performing first time file write process".
+print "This will allow the installation wizard to install your software, please be patient.".
 LOG "set password to " + password_full + ".".
 LOG "set loggedin to 0." to Kerbo_OS_log.ks.
 LOG "UNTIL loggedin = 2 {" to Kerbo_OS_log.ks.
@@ -80,6 +87,7 @@ LOG "			}" to Kerbo_OS_log.ks.
 LOG "		}" to Kerbo_OS_log.ks.
 LOG "	}" to Kerbo_OS_log.ks.
 LOG "}" to Kerbo_OS_log.ks.
+print "Load file has been completed!".
 LOG "print "Log-in complete!"." to Kerbo_OS_log.ks.
 LOG "run Kerbo_OS_desktop." to Kerbo_OS_log.ks.
 LOG "set notation to "[BETA]"." to Kerbo_OS_desktop.ks.
@@ -90,44 +98,74 @@ LOG "set Desktop to true." to Kerbo_OS_desktop.ks.
 LOG "until desktop = false {" to Kerbo_OS_desktop.ks.
 LOG "print "Current time: " + TIME:CALENDAR + TIME:CLOCK." to Kerbo_OS_desktop.ks.
 LOG "print "Programs:"." TO Kerbo_OS_desktop.ks.
-LOG "print "Orbital data (AG1)"." TO Kerbo_OS_desktop.ks.
-LOG "print "Settings (AG2)"." TO Kerbo_OS_desktop.ks.
-LOG "print "File Viewer (AG3)"." TO Kerbo_OS_desktop.ks.
-LOG "print "KOS configurator (AG4)"." TO Kerbo_OS_desktop.ks.
-LOG "print "PEGAS auto-writer tool (AG5)"." TO Kerbo_OS_desktop.ks.
-LOG "IF programmer_mode = 1 {" TO Kerbo_OS_desktop.ks.
-LOG "	print "Kerbo OS documentation (web page) (AG6)"." TO Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "IF science_mode = 1 {" TO Kerbo_OS_desktop.ks.
-LOG "	print "Science tools (AG7)"." TO Kerbo_OS_desktop.ks.
-LOG "}" TO Kerbo_OS_desktop.ks.
-LOG "Print "Kerbo OS-Personal V." + OS_Version + notation." to Kerbo_OS_desktop.ks.
-LOG "Print "these are all not implimented as this is acctualy just a tech demo."." to Kerbo_OS_desktop.ks.
+LOG "print "App store (AG1)"." TO Kerbo_OS_desktop.ks.
+LOG "print "settings (AG2)"." TO Kerbo_OS_desktop.ks.
+LOG "print "Help (AG4)"." TO Kerbo_OS_desktop.ks.
 LOG "ON AG1 {" to Kerbo_OS_desktop.ks.
-LOG "	Orbitaldata()." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "ON AG2 {" to Kerbo_OS_desktop.ks.
-LOG "	WIP." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "ON AG3 {" to Kerbo_OS_desktop.ks.
-LOG "	WIP." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "ON AG4 {" to Kerbo_OS_desktop.ks.
-LOG "	WIP." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "ON AG5 {" to Kerbo_OS_desktop.ks.
-LOG "	WIP." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "ON AG6 {" to Kerbo_OS_desktop.ks.
-LOG "	print "Documentation: N/A"." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "ON AG7 {" to Kerbo_OS_desktop.ks.
-LOG "	print "Science tools WIP"." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "clearscreen.".
-LOG "}" to Kerbo_OS_desktop.ks.
-LOG "FUNCTION Orbitaldata {" to Kerbo_OS_desktop.ks.
-LOG "	print "Apoapsis: " + ROUND(apoapsis/1000, 1) + " Km"." to Kerbo_OS_desktop.ks.
-LOG "	print "periapsis: " + ROUND(periapsis/1000, 1) + " Km"." to Kerbo_OS_desktop.ks.
-LOG "	print "Inclination: " + inclination + " Degrees"." to Kerbo_OS_desktop.ks.
-LOG "}" to Kerbo_OS_desktop.ks.
+LOG "	run Kerbo_OS_appstore." TO Kerbo_OS_desktop.ks.
+LOG "	set Desktop to false." TO Kerbo_OS_desktop.ks.
+LOG "}" TO Kerbo_OS_desktop.ks.
+LOG "ON AG2 {" TO Kerbo_OS_desktop.ks.
+LOG "	set desktop to false." TO Kerbo_OS_desktop.ks.
+LOG "	run settings." TO Kerbo_OS_desktop.ks.
+LOG "}" TO Kerbo_OS_desktop.ks.
+LOG "wait 0.1." TO Kerbo_OS_desktop.ks.
+LOG "clearscreen." TO Kerbo_OS_desktop.ks.
+LOG "}" TO Kerbo_OS_desktop.ks.
+print "Desktop settup complete!".
+print "Setting up App store...".
+LOG "SET app_list TO LIST(LIST("Orbital_Data_prg_data.", "Maths_In_Space_prg_data.", "Kerbo_OS_documentation_prg_data.", "AS_help_prg_data"), 
+LOG "set appstore to true." TO Kerbo_OS_appstore.ks.
+LOG "set page to 1." TO Kerbo_OS_appstore.ks.
+LOG "IF page = 1 {" TO Kerbo_OS_appstore.ks.
+LOG "until appstore = false {" TO Kerbo_OS_appstore.ks.
+LOG "	print "App		Install key press"." TO Kerbo_OS_appstore.ks.
+LOG "	print "Orbital Data			[1]"." TO Kerbo_OS_appstore.ks.
+LOG "	print "Page Number: " + page." TO Kerbo_OS_appstore.ks.
+LOG "	print "More coming soon"." TO Kerbo_OS_appstore.ks.
+LOG "	print "Back to desktop		[0]"." TO Kerbo_OS_appstore.ks.
+LOG "	ON AG1 {" TO Kerbo_OS_appstore.ks.
+LOG "		set prg to app_list[page-1][0]." TO Kerbo_OS_appstore.ks.
+LOG "		set appstore to false." TO Kerbo_OS_appstore.ks.
+LOG "		run prg." TO Kerbo_OS_appstore.ks.
+LOG "	}" TO Kerbo_OS_appstore.ks.
+LOG "	ON AG0 {" TO Kerbo_OS_appstore.ks.
+LOG "		set appstore to 0." TO Kerbo_OS_appstore.ks.
+LOG "		run Kerbo_OS_desktop." TO Kerbo_OS_appstore.ks.
+LOG "	}" TO Kerbo_OS_desktop.ks.
+LOG "}" TO Kerbo_OS_appstore.ks.
+LOG "}" TO Kerbo_OS_appstore.ks.
+print "App store has completed installing...".
+print "Installing installation programs".
+LOG "CREATE Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "set data to true." TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "UNTIL data = false {" TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "print "Time: " + TIME:CLOCK + " on " + TIME:CALENDAR. TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "print "Periapsis: " + ROUND(periapsis/1000, 1) + " Km". TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "print "Apoapsis: " + ROUND(apoapsis/1000, 1)  + " Km". TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "print "Inclination: " + ROUND(inclination, 2) + " Degrees". TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "print "Orbital Period: " + ROUND(((period/60)/1.6)*10, 1) + " seconds". TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "ON AG0 {" TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "	set data to false." TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "	run Kerbo_OS_desktop." TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "}" TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "wait 0.1." TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "clearscreen." TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+LOG "LOG "}" TO Orbital_Data.ks." TO Orbital_Data_prg_data.ks.
+print "Installing settings files...".
+CREATE settings_saved.ks.
+LOG "set setup to true." TO settings.ks.
+LOG "UNTIL settup = false {" TO settings.ks.
+LOG "print "settings:"." TO settings.ks.
+LOG "print "update kOS-OS		[1]"." TO settings.ks.
+LOG "print "Re-install kOS-OS	[2]"." TO settings.ks.
+LOG "wait 0.1." TO settings.ks.
+LOG "clearscreen." TO settings.ks.
+LOG "ON AG1 {"
+LOG "	IF EXISTS update_file {" TO settings.ks.
+LOG "		run update_file." TO settings.ks.
+LOG "	}" TO settings.ks.
+LOG "}" TO settings.ks.
+LOG "}" TO settings.ks.
+print "SETTUP complete! auto starting kOS-OS".
+run Kerbo_OS_desktop.
